@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dym9yQZHdbTzFEnN3p4k8jvXrX9QD2/bd3kpjV4E2wiplDAE0z4V4b3gIbA+3k8kFkS/VdFxByP2OCZojb7Q0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Poppins', sans-serif; background:#f5f5f4; color:#1F2A20; }
+    h1,h2,h3 { font-family:'Playfair Display', serif; }
+    a { text-decoration:none; color:inherit; }
+    section { padding:80px 20px; min-height:100vh; position:relative; overflow:hidden; }
+
+    /* Navbar */
+    nav {
+      position:fixed; top:0; left:0; width:100%;
+      background:rgba(108,118,100,0.95); color:#fff;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:18px 40px; z-index:1000;
+      border-bottom:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 18px 40px rgba(0,0,0,0.18);
+      overflow:hidden;
+    }
+    nav::before {
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(circle at 15% 40%, rgba(255,255,255,0.14), transparent 20%),
+                  radial-gradient(circle at 85% 50%, rgba(163,177,138,0.12), transparent 18%);
+      pointer-events:none;
+      opacity:0.85;
+    }
+    nav h1 {
+      font-weight:700;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      position:relative;
+      z-index:1;
+    }
+    nav ul { display:flex; list-style:none; gap:18px; position:relative; z-index:1; }
+    nav ul li { margin:0; }
+    nav ul li a {
+      color:#fff;
+      font-weight:700;
+      padding:10px 14px;
+      border-radius:999px;
+      transition:all 0.3s ease;
+    }
+    nav ul li a:hover {
+      color:#1F2A20;
+      background:rgba(255,255,255,0.18);
+    }
+
+    /* Home */
+    #home {
+      display:flex; justify-content:space-between; align-items:center;
+      background:linear-gradient(135deg, #1F2A20, #6C7664);
+      color:#fff; padding-top:120px;
+    }
+    #home .intro { flex:1; padding:40px; }
+    #home h1 { font-size:3rem; margin-bottom:10px; font-weight:700; }
+    #home h2 { font-size:2rem; margin-bottom:20px; color:#B6C0B6; font-weight:600; }
+    #home p { margin-bottom:30px; font-weight:500; }
+    .btn {
+      display:inline-block; padding:10px 20px; margin:5px;
+      background:#6C7664; color:#fff; border-radius:5px; transition:0.3s;
+    }
+    .btn:hover {
+  background:#A3B18A;
+  box-shadow:0 0 10px rgba(163,177,138,0.6);
+  transform:scale(1.05);
+}
+    #home .portrait { flex:1; text-align:center; position:relative; }
+    #home .portrait::before {
+      content:"";
+      position:absolute;
+      top:10%; left:50%;
+      width:340px; height:340px;
+      transform:translateX(-50%) rotate(15deg);
+      background: radial-gradient(circle at 25% 25%, rgba(163,177,138,0.28), transparent 45%),
+                  radial-gradient(circle at 75% 75%, rgba(255,255,255,0.18), transparent 30%);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:30px;
+      z-index:0;
+      filter:blur(0.5px);
+    }
+    #home .portrait img {
+      width:300px;
+      border-radius:40px;
+      box-shadow:0 30px 60px rgba(0,0,0,0.2);
+      position:relative;
+      z-index:1;
+      transition:transform 0.4s ease;
+    }
+    #home .portrait img:hover {
+      transform:translateY(-6px) scale(1.02);
+    }
+
+    /* Bubble background effect */
+    .bubble {
+      position:absolute;
+      border-radius:50%;
+      background:rgba(182,192,182,0.2);
+      animation: float 12s infinite ease-in-out;
+    }
+    .bubble:nth-child(1){ width:80px; height:80px; top:20%; left:10%; }
+    .bubble:nth-child(2){ width:120px; height:120px; top:60%; left:30%; }
+    .bubble:nth-child(3){ width:60px; height:60px; top:40%; left:70%; }
+    .bubble:nth-child(4){ width:150px; height:150px; top:75%; left:80%; }
+    .bubble:nth-child(5){ width:50px; height:50px; top:15%; left:85%; }
+    .bubble:nth-child(6){ width:100px; height:100px; top:50%; left:5%; }
+    @keyframes float {
+      0% { transform:translateY(0); }
+      50% { transform:translateY(-40px); }
+      100% { transform:translateY(0); }
+    }
+
+    /* About */
+    #about {
+      background:linear-gradient(135deg, #f5f5f4, #B6C0B6);
+      position:relative;
+      overflow:hidden;
+    }
+    #about::before {
+      content:"";
+      position:absolute;
+      top:-60px; right:-60px;
+      width:260px; height:260px;
+      background:rgba(163,177,138,0.18);
+      border-radius:50%;
+      filter:blur(24px);
+      z-index:0;
+    }
+    #about::after {
+      content:"";
+      position:absolute;
+      bottom:-50px; left:-50px;
+      width:220px; height:220px;
+      border:2px dashed rgba(255,255,255,0.5);
+      border-radius:50%;
+      z-index:0;
+    }
+    #about h2 {
+      text-align:center;
+      margin-bottom:40px;
+      position:relative;
+      z-index:1;
+      font-size:2.8rem;
+      letter-spacing:0.08em;
+      color:#1F2A20;
+    }
+    #about .container {
+      display:flex; flex-wrap:wrap; gap:40px;
+      justify-content:center; align-items:center;
+      background:rgba(255,255,255,0.92);
+      border-radius:30px;
+      box-shadow:0 30px 80px rgba(0,0,0,0.14);
+      padding:40px;
+      position:relative;
+      z-index:1;
+    }
+    #about img {
+      width:320px;
+      border-radius:30px;
+      box-shadow:0 30px 80px rgba(0,0,0,0.18);
+      border:6px solid rgba(255,255,255,0.95);
+    }
+    #about .details {
+      max-width:600px;
+    }
+    #about .details h3 {
+      margin-bottom:20px;
+      font-size:1.6rem;
+      letter-spacing:0.04em;
+      color:#3B432D;
+    }
+    #about .details p {
+      margin:12px 0;
+      line-height:1.8;
+      color:#3B3F34;
+    }
+    #about .details p strong {
+      color:#6C7664;
+    }
+    #about .interests {
+      margin-top:20px;
+      display:flex; flex-wrap:wrap;
+      gap:14px;
+      font-size:1.1rem;
+      color:#6C7664;
+    }
+    #about .interests span {
+      background:rgba(163,177,138,0.14);
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow:0 10px 20px rgba(163,177,138,0.08);
+    }
+
+    #about .skills {
+      margin-top:22px;
+      background:rgba(163,177,138,0.12);
+      padding:20px 18px;
+      border-radius:20px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5);
+    }
+    #about .skills h3 {
+      font-size:1.2rem;
+      margin-bottom:14px;
+      color:#3B432D;
+    }
+    #about .skills ul {
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    #about .skills li {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:#f5f5f0;
+      padding:10px 14px;
+      border-radius:999px;
+      color:#3B432D;
+      font-size:0.96rem;
+      box-shadow:0 10px 20px rgba(0,0,0,0.05);
+      transition:transform 0.2s ease, background 0.2s ease;
+    }
+    #about .skills li:hover {
+      transform:translateY(-1px);
+      background:#A3B18A;
+      color:#fff;
+    }
+    #about .skills li i {
+      color:#344E41;
+    }
+
+    /* Projects */
+    #works {
+      background:linear-gradient(135deg, #6C7664, #9A8A6A);
+    }
+    #works h2 { text-align:center; margin-bottom:20px; color:#fff; }
+    #works p { text-align:center; margin-bottom:40px; color:#f5f5f4; }
+    .project-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px; padding:0 40px;
+    }
+    .project-card {
+      position:relative; overflow:hidden; border-radius:24px; cursor:pointer;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.16);
+      box-shadow:0 20px 50px rgba(0,0,0,0.18);
+      transition:transform 0.3s ease, border-color 0.3s ease;
+      display:flex; flex-direction:column;
+    }
+    .project-card:hover { transform:translateY(-5px); border-color:rgba(255,255,255,0.28); }
+    .project-card a { display:block; color:inherit; }
+    .project-visual { position:relative; overflow:hidden; }
+    .project-card img { width:100%; height:240px; object-fit:cover; display:block; transition:transform 0.3s ease; }
+    .project-card:hover img { transform:scale(1.05); }
+    .project-card .overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(15, 22,15,0) 40%, rgba(15,22,15,0.95) 100%);
+      color:#fff;
+      display:flex; flex-direction:column; justify-content:flex-end; padding:26px;
+      opacity:0; transition:opacity 0.3s ease;
+    }
+    .project-card:hover .overlay { opacity:1; }
+    .project-card .overlay h3 { margin:0 0 10px; font-size:1.4rem; }
+    .project-card .overlay p { margin:0; line-height:1.6; color:rgba(255,255,255,0.88); }
+    .project-info {
+      padding:24px 22px 26px;
+      background:#fdfcf8;
+      color:#1F2A20;
+    }
+    #works .project-info h3 { margin:0 0 10px; font-size:1.35rem; color:#2A3327; }
+    #works .project-info p { margin:0 0 16px; line-height:1.7; color:#222822; }
+    #works .project-info .tools {
+      display:flex; flex-wrap:wrap; gap:10px; font-size:0.95rem; color:#5B634F;
+    }
+    .project-info .tools span {
+      background:rgba(163,177,138,0.12); padding:8px 12px; border-radius:999px;
+    }
+
+    /* Modal */
+    .modal {
+      display:none;
+      position:fixed;
+      z-index:2000;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      background-color:rgba(0,0,0,0.8);
+      animation:fadeIn 0.3s ease;
+    }
+    .modal.show {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .modal-content {
+      position:relative;
+      max-width:90%;
+      max-height:90%;
+      object-fit:contain;
+      border-radius:12px;
+      box-shadow:0 0 30px rgba(0,0,0,0.5);
+    }
+    .modal-close {
+      position:absolute;
+      top:20px;
+      right:30px;
+      font-size:2rem;
+      color:#fff;
+      cursor:pointer;
+      background:rgba(0,0,0,0.5);
+      border:none;
+      border-radius:50%;
+      width:50px;
+      height:50px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      transition:background 0.3s ease;
+    }
+    .modal-close:hover {
+      background:rgba(0,0,0,0.8);
+    }
+    @keyframes fadeIn {
+      from { opacity:0; }
+      to { opacity:1; }
+    }
+
+    /* Contact */
+    #contact {
+      background:linear-gradient(135deg, #B6C0B6, #6C7664);
+    }
+    #contact h2 { text-align:center; margin-bottom:40px; color:#1F2A20; }
+    #contact .container { display:flex; flex-wrap:wrap; gap:40px; justify-content:center; }
+    form { flex:1; min-width:300px; max-width:500px; display:flex; flex-direction:column; }
+    form input, form textarea {
+      margin:10px 0; padding:12px; border:1px solid #ccc; border-radius:5px;
+    }
+    form button {
+      padding:12px; background:#6C7664; color:#fff; border:none; border-radius:5px;
+      cursor:pointer; transition:0.3s;
+    }
+    form button:hover { background:#9A8A6A; }
+    .contact-info { flex:1; min-width:250px; max-width:400px; color:#1F2A20; }
+    .contact-info p { margin:15px 0; display:flex; align-items:center; }
+    .contact-info span { margin-right:10px; color:#fff; font-size:1.2rem; }
+
+    /* Smooth scroll + fade-in */
+    html { scroll-behavior: smooth; }
+    .fade-in { opacity:0; transform:translateY(20px); transition:opacity 1s ease, transform 1s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:768px){
+      #home {
+        flex-direction:column;
+        text-align:center;
+        padding-top:100px;
+      }
+      #home .portrait img {
+        width:200px;
+        margin-top:20px;
+      }
+      nav ul {
+        flex-wrap:wrap;
+        justify-content:center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <h1>My Portfolio</h1>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+ <!-- Home -->
+<section id="home" class="fade-in">
+  <div class="intro">
+    <h1>Hello, I'm Karylle S. Sunga</h1>
+    <h2>Creative Artist & Designer</h2>
+    <p>Aspiring designer passionate about interactive and aesthetic projects.</p>
+    <a href="#works" class="btn">Hire Me</a>
+    <a href="#about" class="btn">Resume</a>
+  </div>
+
+  <!-- Portrait image -->
+<div class="portrait">
+ <img src="Pic1.png" alt="Karylle Sunga Photo">
+</div>
+
+  <!-- Bubble background -->
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</section>
+
+  
+  <!-- About -->
+  <section id="about" class="fade-in">
+    <h2>About Me</h2>
+    <div class="container">
+       <img src="Pic2.png" alt="Karylle Sunga Photo">
+            <div class="details">
+        <h3 style="color:#6C7664;">MY INTRO</h3>
+        <p>I’ve always loved art in all its forms, and creating has become my way of expressing myself. My passion for graphic design grew from that love, and it continues to inspire me every day. Along the way, I’ve discovered so many new skills and techniques I never knew before, and I’m excited to keep learning and exploring as I grow as a creative artist.</p>
+        <p><strong>Name:</strong> Karylle S. Sunga</p>
+        <p><strong>Skills:</strong> Adobe Photoshop, Graphic Design, Digital Illustration, HTML & CSS, Responsive Web Design, Creativity, Attention to Detail</p>
+        <p><strong>Date of Birth:</strong> May 6, 2007</p>
+        <p><strong>Address:</strong> Santulan, Malabon City</p>
+        <p><strong>Email:</strong> karyllesunga6@gmail.com</p>
+        <p><strong>Phone:</strong> +63-123-456-7890</p>
+        <div class="interests">
+          <span>🎵 Music</span>
+          <span>✈️ Travel</span>
+          <span>🎬 Movies</span>
+          <span>⚽ Sports</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="works" class="fade-in">
+    <h2>Featured Projects</h2>
+    <p>Click any project card to explore the full case study or live preview.</p>
+    <div class="project-grid">
+      <div class="project-card">
+        <a onclick="openModal('1.png')">
+          <div class="project-visual">
+            <img src="1.png" alt="Portfolio Brand Design">
+            <div class="overlay">
+              <h3>Brand Refresh Studio</h3>
+            </div>
+          </div>
+        </a>
+        <div class="project-info">
+          <h3>Brand Refresh Studio</h3>
+          <p>A playful Photoshop collage featuring magical cats, cinematic lighting, and layered textures to create a bold, imaginative brand concept.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <a onclick="openModal('2.png')">
+          <div class="project-visual">
+            <img src="2.png" alt="Iron Man Project">
+            <div class="overlay">
+              <h3>Iron Man Project</h3>
+            </div>
+          </div>
+        </a>
+        <div class="project-info">
+          <h3>Iron Man Project</h3>
+          <p>A conceptual Photoshop design inspired by Iron Man, exploring the contrast between man and machine through color, composition, and visual rhythm.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <a onclick="openModal('3.png')">
+          <div class="project-visual">
+            <img src="3.png" alt="Creative Campaign Design">
+            <div class="overlay">
+              <h3>Campaign Visuals</h3>
+            </div>
+          </div>
+        </a>
+        <div class="project-info">
+          <h3>Campaign Visuals</h3>
+          <p>A dynamic Photoshop collage combining realism and fantasy — dinosaurs bursting from a school bus — designed to capture attention and spark curiosity.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Extra bubbles for Projects background -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="fade-in">
+    <h2>Contact Me</h2>
+    <div class="container">
+
+      <!-- Contact Form -->
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <input type="text" placeholder="Subject" required>
+        <textarea rows="5" placeholder="Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <p><span>📍</span><strong>Address:</strong> 9m Santos St. Santulan Malabon </p>
+        <p><span>📞</span><strong>Phone:</strong> +63-123-456-7890</p>
+        <p><span>✉️</span><strong>Email:</strong> karyllesunga6@gmail.com</p>
+        <p><span>📘</span><strong>Facebook:</strong> 
+    <a href="https://facebook.com/karyllesunga" target="_blank">karylle sunga</a>
+  </p>
+
+  <p><span>💻</span><strong>GitHub:</strong> 
+    <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a>
+  </p>
+      </div>
+
+    </div>
+    <!-- Extra bubbles for Contact background --> 
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </section>
+
+  <!-- Modal -->
+  <div id="projectModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <img id="modalImage" class="modal-content" alt="Project Image">
+  </div>
+
+  <!-- Fade-in Script -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => {
+      section.classList.add("fade-in");
+      observer.observe(section);
+    });
+n 
+    // Modal Functions
+    function openModal(imageSrc) {
+      const modal = document.getElementById("projectModal");
+      const modalImage = document.getElementById("modalImage");
+      modalImage.src = imageSrc;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("projectModal");
+      modal.classList.remove("show");
+      document.body.style.overflow = "auto";
+    }
+
+    // Close modal when clicking outside the image
+    document.getElementById("projectModal").addEventListener("click", function(event) {
+      if (event.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
